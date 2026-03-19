@@ -1,115 +1,209 @@
+# 🏗️ SQL Data Warehouse Project (MySQL)
 
-# Data Warehouse and Analytics Project
-
-Welcome to the **Data Warehouse and Analytics Project** repository! 🚀  
-This project demonstrates a comprehensive data warehousing and analytics solution, from building a data warehouse to generating actionable insights. Designed as a portfolio project, it highlights industry best practices in data engineering and analytics.
-
----
-## 🏗️ Data Architecture
-
-The data architecture for this project follows Medallion Architecture **Bronze**, **Silver**, and **Gold** layers:
-![Data Architecture](docs/data_architecture.png)
-
-1. **Bronze Layer**: Stores raw data as-is from the source systems. Data is ingested from CSV Files into SQL Server Database.
-2. **Silver Layer**: This layer includes data cleansing, standardization, and normalization processes to prepare data for analysis.
-3. **Gold Layer**: Houses business-ready data modeled into a star schema required for reporting and analytics.
-
----
-## 📖 Project Overview
-
-This project involves:
-
-1. **Data Architecture**: Designing a Modern Data Warehouse Using Medallion Architecture **Bronze**, **Silver**, and **Gold** layers.
-2. **ETL Pipelines**: Extracting, transforming, and loading data from source systems into the warehouse.
-3. **Data Modeling**: Developing fact and dimension tables optimized for analytical queries.
-4. **Analytics & Reporting**: Creating SQL-based reports and dashboards for actionable insights.
-
-🎯 This repository is an excellent resource for professionals and students looking to showcase expertise in:
-- SQL Development
-- Data Architect
-- Data Engineering  
-- ETL Pipeline Developer  
-- Data Modeling  
-- Data Analytics  
+> A comprehensive, end-to-end Data Warehouse built on **MySQL** using the **Medallion Architecture** — covering ETL pipelines, data modeling, and SQL-based analytics for business intelligence.
 
 ---
 
-## 🛠️ Important Links & Tools:
+## 📌 Project Overview
 
-Everything is for Free!
-- **[Datasets](datasets/):** Access to the project dataset (csv files).
-- **[SQL Server Express](https://www.microsoft.com/en-us/sql-server/sql-server-downloads):** Lightweight server for hosting your SQL database.
-- **[SQL Server Management Studio (SSMS)](https://learn.microsoft.com/en-us/sql/ssms/download-sql-server-management-studio-ssms?view=sql-server-ver16):** GUI for managing and interacting with databases.
-- **[Git Repository](https://github.com/):** Set up a GitHub account and repository to manage, version, and collaborate on your code efficiently.
-- **[DrawIO](https://www.drawio.com/):** Design data architecture, models, flows, and diagrams.
-- **[Notion](https://www.notion.com/):** All-in-one tool for project management and organization.
-- **[Notion Project Steps](https://thankful-pangolin-2ca.notion.site/SQL-Data-Warehouse-Project-16ed041640ef80489667cfe2f380b269?pvs=4):** Access to All Project Phases and Tasks.
+This project demonstrates a production-style data warehousing solution that consolidates sales data from multiple source systems (ERP and CRM), transforms it through layered pipelines, and surfaces actionable business insights through SQL-based reporting.
+
+Built as a **portfolio project**, it showcases industry-standard practices in:
+- Data Engineering (ETL design, layer architecture)
+- Data Modeling (Star Schema, Fact & Dimension tables)
+- Data Analytics (KPIs, trend analysis, customer segmentation)
 
 ---
 
-## 🚀 Project Requirements
+## 🏛️ Architecture: Medallion Architecture
 
-### Building the Data Warehouse (Data Engineering)
+```
+Source Systems (CSV Files)
+        │
+        ▼
+┌─────────────────┐
+│   BRONZE LAYER  │  ← Raw ingestion, no transformation
+│  (Raw Data)     │
+└────────┬────────┘
+         │
+         ▼
+┌─────────────────┐
+│   SILVER LAYER  │  ← Cleansed, standardized, normalized
+│  (Clean Data)   │
+└────────┬────────┘
+         │
+         ▼
+┌─────────────────┐
+│   GOLD LAYER    │  ← Star schema, business-ready analytics
+│  (Analytics)    │
+└─────────────────┘
+```
 
-#### Objective
-Develop a modern data warehouse using SQL Server to consolidate sales data, enabling analytical reporting and informed decision-making.
-
-#### Specifications
-- **Data Sources**: Import data from two source systems (ERP and CRM) provided as CSV files.
-- **Data Quality**: Cleanse and resolve data quality issues prior to analysis.
-- **Integration**: Combine both sources into a single, user-friendly data model designed for analytical queries.
-- **Scope**: Focus on the latest dataset only; historization of data is not required.
-- **Documentation**: Provide clear documentation of the data model to support both business stakeholders and analytics teams.
+| Layer | Description |
+|-------|-------------|
+| **Bronze** | Raw data loaded as-is from ERP and CRM CSV files into MySQL staging tables |
+| **Silver** | Data cleansing, deduplication, type standardization, and normalization |
+| **Gold** | Star schema with Fact and Dimension tables optimized for analytical queries |
 
 ---
-
-### BI: Analytics & Reporting (Data Analysis)
-
-#### Objective
-Develop SQL-based analytics to deliver detailed insights into:
-- **Customer Behavior**
-- **Product Performance**
-- **Sales Trends**
-
-These insights empower stakeholders with key business metrics, enabling strategic decision-making.  
-
-For more details, refer to [docs/requirements.md](docs/requirements.md).
 
 ## 📂 Repository Structure
+
 ```
-data-warehouse-project/
+sql-data-warehouse-project/
 │
-├── datasets/                           # Raw datasets used for the project (ERP and CRM data)
+├── datasets/                   # Source data files
+│   ├── erp_data.csv            # ERP system export
+│   └── crm_data.csv            # CRM system export
 │
-├── docs/                               # Project documentation and architecture details
-│   ├── etl.drawio                      # Draw.io file shows all different techniquies and methods of ETL
-│   ├── data_architecture.drawio        # Draw.io file shows the project's architecture
-│   ├── data_catalog.md                 # Catalog of datasets, including field descriptions and metadata
-│   ├── data_flow.drawio                # Draw.io file for the data flow diagram
-│   ├── data_models.drawio              # Draw.io file for data models (star schema)
-│   ├── naming-conventions.md           # Consistent naming guidelines for tables, columns, and files
+├── docs/                       # Project documentation
+│   ├── requirements.md         # Business & technical requirements
+│   ├── data_catalog.md         # Field descriptions and metadata
+│   └── naming-conventions.md  # Table, column, and file naming standards
 │
-├── scripts/                            # SQL scripts for ETL and transformations
-│   ├── bronze/                         # Scripts for extracting and loading raw data
-│   ├── silver/                         # Scripts for cleaning and transforming data
-│   ├── gold/                           # Scripts for creating analytical models
+├── scripts/                    # All SQL scripts
+│   ├── bronze/                 # Raw data load scripts
+│   ├── silver/                 # Transformation and cleansing scripts
+│   └── gold/                   # Star schema creation and analytics
 │
-├── tests/                              # Test scripts and quality files
-│
-├── README.md                           # Project overview and instructions
-├── LICENSE                             # License information for the repository
-├── .gitignore                          # Files and directories to be ignored by Git
-└── requirements.txt                    # Dependencies and requirements for the project
+└── README.md
 ```
+
 ---
 
+## 🔧 Tech Stack
 
-## 🛡️ License
+| Tool | Purpose |
+|------|---------|
+| **MySQL** | Core database engine |
+| **MySQL Workbench** | Schema design and query development |
+| **Draw.io** | Data architecture & flow diagrams |
+| **Git & GitHub** | Version control and collaboration |
+| **CSV Files** | Source data (ERP + CRM systems) |
 
-This project is licensed under the [MIT License](LICENSE). You are free to use, modify, and share this project with proper attribution.
+---
 
-## 🌟 About Me
+## 📐 Data Model: Star Schema (Gold Layer)
 
-Hi there! I'm **LOGESH PURUSHOTHAMAN**, . I’m an IT professional and passionate YouTuber on a mission to share knowledge and make working with data enjoyable and engaging!
+The Gold Layer implements a **Star Schema** designed for fast analytical querying:
 
-Let's stay in touch! Feel free to connect with me on the following platforms(https://www.youtube.com/@datawithbaraa)
+- **Fact Table:** `fact_sales` — contains transactional sales metrics (revenue, quantity, order dates)
+- **Dimension Tables:**
+  - `dim_customer` — customer demographics and segments
+  - `dim_product` — product categories, subcategories, and pricing
+  - `dim_date` — date hierarchy for time-based analysis
+
+---
+
+## 🔄 ETL Pipeline Summary
+
+### Bronze Layer — Raw Ingestion
+- Load CSV files directly into MySQL staging tables
+- No transformation applied; data preserved as-is
+- Tables prefixed: `bronze_`
+
+### Silver Layer — Cleansing & Transformation
+- Handle NULL values, duplicates, and data type mismatches
+- Standardize formats (dates, phone numbers, country codes)
+- Normalize categorical fields
+- Tables prefixed: `silver_`
+
+### Gold Layer — Business-Ready Data
+- Build Fact and Dimension tables using transformed Silver data
+- Apply business logic and calculated metrics
+- Optimized for JOIN performance and aggregation queries
+- Tables prefixed: `gold_` (or `dim_` / `fact_`)
+
+---
+
+## 📊 Analytics & Reporting
+
+The project includes SQL-based analytics across three key business domains:
+
+### 🧍 Customer Analysis
+- Customer lifetime value (CLV)
+- Purchase frequency and recency
+- Customer segmentation by geography and behavior
+
+### 📦 Product Performance
+- Top-selling products by revenue and volume
+- Product category contribution to total sales
+- Inventory turnover analysis
+
+### 📈 Sales Trends
+- Monthly and yearly revenue trends
+- Year-over-year (YoY) growth comparison
+- Seasonal demand patterns
+
+---
+
+## 🚀 Getting Started
+
+### Prerequisites
+- MySQL 8.0+ installed
+- MySQL Workbench (or any SQL client)
+- Git
+
+### Setup Instructions
+
+```bash
+# 1. Clone the repository
+git clone https://github.com/Logeshanalytics/sql-data-warehouse-project.git
+cd sql-data-warehouse-project
+
+# 2. Open MySQL Workbench and create the database
+CREATE DATABASE data_warehouse;
+USE data_warehouse;
+
+# 3. Run scripts in order
+-- Step 1: Bronze Layer
+source scripts/bronze/load_bronze.sql;
+
+-- Step 2: Silver Layer
+source scripts/silver/transform_silver.sql;
+
+-- Step 3: Gold Layer
+source scripts/gold/build_gold.sql;
+
+# 4. Run analytics queries
+source scripts/gold/analytics_reports.sql;
+```
+
+---
+
+## 📋 Data Sources
+
+| Source | Description | Format |
+|--------|-------------|--------|
+| ERP System | Sales transactions, product info, order records | CSV |
+| CRM System | Customer demographics, contact details, segments | CSV |
+
+---
+
+## 🎯 Key Skills Demonstrated
+
+- ✅ **ETL Design** — Multi-layer pipeline from raw ingestion to analytics-ready data
+- ✅ **Data Modeling** — Star schema with optimized Fact and Dimension tables
+- ✅ **SQL Proficiency** — Complex queries, window functions, aggregations, CTEs
+- ✅ **Data Cleaning** — NULL handling, deduplication, standardization
+- ✅ **Database Design** — Indexing strategies, table relationships, naming conventions
+- ✅ **Documentation** — Architecture diagrams, data catalog, requirements spec
+
+---
+
+## 👤 Author
+
+**Logesh** — Aspiring Data Analyst  
+📧 Logesh Purushothaman  
+🔗 https://in.linkedin.com/in/logesh-purushothaman  
+🐙 [GitHub][(https://github.com/Logeshanalytics)](https://github.com/Logeshanalytics)
+
+---
+
+## 📄 License
+
+This project is open-source and available under the [MIT License](LICENSE).
+
+---
+
+> ⭐ If you found this project helpful, please give it a star!
